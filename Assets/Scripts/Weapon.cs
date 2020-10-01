@@ -5,7 +5,6 @@ using UnityEngine;
 using Message;
 public class Weapon : MonoBehaviour
 {
-    public string name;
     public int id;
 
     public int currentBullets;
