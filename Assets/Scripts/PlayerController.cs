@@ -49,6 +49,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     readonly int m_HashDeath = Animator.StringToHash("Dead");
     readonly int m_HashJump = Animator.StringToHash("Jump");
     readonly int m_HashLanded = Animator.StringToHash("Landed");
+
+
+    readonly int m_HashFire = Animator.StringToHash("Weapon_Aim_Fire");
+    
+
     private void Start() {
         m_Animator = GetComponent<Animator>();
         m_Input = GetComponent<PlayerInput>();
@@ -173,7 +178,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
 
     // Called by Ellen's Damageable when she is hurt.
     public void OnReceiveMessage(MessageType type, object sender, object data) {
-        Debug.Log(type.ToString());
+        //Debug.Log(type.ToString());
         switch(type) {
             case MessageType.DAMAGED: {
                     Damageable.DamageMessage damageData = (Damageable.DamageMessage)data;
@@ -218,7 +223,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     }
 
     public void BulletFired() {
-        m_Animator.SetTrigger(m_HashFireWeapon);
+        m_Animator.Play(m_HashFire, 1);
+        //m_Animator.SetTrigger(m_HashFireWeapon);
     }
 
     public void Reloading() {

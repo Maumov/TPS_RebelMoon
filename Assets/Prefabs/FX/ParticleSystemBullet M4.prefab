@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4569853543356676211}
   - component: {fileID: 2641101122915103527}
   m_Layer: 13
-  m_Name: ParticleSystemBullet
+  m_Name: ParticleSystemBullet M4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: 0c6ceb865a050c64683892d8aa073844, type: 2}
+  - {fileID: 2100000, guid: 33607417f4d5ef543b07452c5d9b773c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
