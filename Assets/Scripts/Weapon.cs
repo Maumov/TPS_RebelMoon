@@ -49,10 +49,10 @@ public class Weapon : MonoBehaviour
             hit = new RaycastHit();
 
             if(Physics.Raycast(ray, out hit, 100f, layerMask)) {
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
                 
                 Vector3 bulletSpawnForward = hit.point - bulletSpawnPosition.transform.position;
-                Debug.Log("Forward: " + bulletSpawnForward);
+                //Debug.Log("Forward: " + bulletSpawnForward);
                 bulletSpawnPosition.transform.forward = bulletSpawnForward;
 
             } else {
