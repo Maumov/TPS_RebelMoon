@@ -507,7 +507,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433602255}
-  m_LocalRotation: {x: -0.115831055, y: -0.005902655, z: 0.0004094388, w: 0.9932513}
+  m_LocalRotation: {x: -0.11583106, y: -0.005902641, z: 0.0004094378, w: 0.9932513}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -515,6 +515,76 @@ Transform:
   m_Father: {fileID: 1547036120}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &440786733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 440786734}
+  - component: {fileID: 440786735}
+  m_Layer: 0
+  m_Name: Enemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &440786734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440786733}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440786735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440786733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c246d86a2f0a30c418b4252c307e330c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guardMode: 1
+  currentBehavior: 0
+  waypoints:
+  - position: {x: -0.01, y: 0.4, z: 0}
+    areaRadius: 1
+    connections: 010000000200000003000000
+  - position: {x: 23.57308, y: 0.4, z: 19.434643}
+    areaRadius: 1
+    connections: 000000000200000003000000
+  - position: {x: 23.57308, y: 0.4, z: -7.747853}
+    areaRadius: 1
+    connections: 010000000000000003000000
+  - position: {x: 35.18856, y: 0.4, z: 7.1508255}
+    areaRadius: 1
+    connections: 020000000100000000000000
+  OnWaypointReached:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerSeen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerLostSeen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLowHealth:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &461425005
 GameObject:
   m_ObjectHideFlags: 3
