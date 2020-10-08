@@ -9,10 +9,12 @@ namespace Message
         DAMAGED,
         DEAD,
         RESPAWN,
+        //Add your user defined message type after
         FIRE,
         RELOAD,
         EQUIP,
-        //Add your user defined message type after
+        SIGHTED,
+
     }
 
     public interface IMessageReceiver
