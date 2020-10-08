@@ -12,7 +12,7 @@ public class EnemyBehavior_Patrol : EnemyBehavior
     int currentWaypoint = 0;
     NavMeshAgent agent;
 
-    private void Start() {
+    public override void Start() {
         agent = GetComponent<NavMeshAgent>();
         currentWaypointToGo = waypoints[currentWaypoint];
         SetDestinationToWaypoint();

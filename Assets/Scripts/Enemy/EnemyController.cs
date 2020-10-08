@@ -9,8 +9,17 @@ using static EnemyStatusCheck;
 public class EnemyController : MonoBehaviour, IMessageReceiver
 {
     
-    public List<Waypoint> waypoints;
+    public Transform currentTarget;
 
+    public UnityEvent OnEnemyStart;
+    public UnityEvent OnEnemySighted;
+    public UnityEvent OnEnemyLostSight;
+    public virtual void Start() {
+        OnEnemyStart.Invoke();
+    }
+    public virtual void Update() {
+
+    }
     public void OnReceiveMessage(MessageType type, object sender, object msg) {
 
         switch(type) {
@@ -29,19 +38,19 @@ public class EnemyController : MonoBehaviour, IMessageReceiver
             case MessageType.SIGHTED:
             StatusCheckMessage data = (StatusCheckMessage)msg;
             Debug.Log(data.isInLineOfSight);
+            if(data.isInLineOfSight) {
+                Debug.Log(data.target.name);
+                currentTarget = data.target;
+                OnEnemySighted.Invoke();
+            } else {
+                currentTarget = null;
+                OnEnemyLostSight.Invoke();
+            }
             break;
             default:
             Debug.Log("Whatever");
             break;
         }
-    }
-
-    public virtual void Start() {
-
-    }
-
-    public virtual void Update() {
-        
     }
 
     private void OnEnable() {

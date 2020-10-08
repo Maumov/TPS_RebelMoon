@@ -23,5 +23,6 @@ public class EnemyStatusCheck : MonoBehaviour
     {
         public string message;
         public bool isInLineOfSight;
+        public Transform target;
     }
 }
