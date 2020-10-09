@@ -11,9 +11,13 @@ public class EnemyBehavior_Patrol : EnemyBehavior
     public Waypoint currentWaypointToGo;
     int currentWaypoint = 0;
     NavMeshAgent agent;
+    public override void Awake() {
+        agent = GetComponent<NavMeshAgent>();
+        base.Awake();
+    }
 
     public override void Start() {
-        agent = GetComponent<NavMeshAgent>();
+        
         currentWaypointToGo = waypoints[currentWaypoint];
         SetDestinationToWaypoint();
     }
@@ -29,6 +33,9 @@ public class EnemyBehavior_Patrol : EnemyBehavior
     }
 
     public override void ExecuteBehavior() {
+        if(m_isPaused) {
+            return;
+        }
         base.ExecuteBehavior();
         if(agent.remainingDistance <= 0.5f) {
             currentWaypoint++;

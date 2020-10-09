@@ -23,8 +23,11 @@ public class EnemyCheck_PlayerInSight : EnemyStatusCheck
 
     public override void Check() {
         if(player != null) {
-            IsInSight = Vector3.Angle(transform.forward, player.transform.position - transform.position) < angleOfLineOfSight;
-            SendMessageToAllMessageReceivers(IsInSight, player.transform);
+            
+            if(IsInSight != Vector3.Angle(transform.forward, player.transform.position - transform.position) < angleOfLineOfSight) {
+                IsInSight = !IsInSight;
+                SendMessageToAllMessageReceivers(IsInSight, player.transform);
+            }
         }
     }
 
@@ -38,7 +41,9 @@ public class EnemyCheck_PlayerInSight : EnemyStatusCheck
         PlayerController pl = other.GetComponent<PlayerController>();
         if(pl != null) {
             player = null;
-            SendMessageToAllMessageReceivers(false, null);
+            if(IsInSight) {
+                SendMessageToAllMessageReceivers(false, null);
+            }
         }
     }
 
@@ -46,7 +51,7 @@ public class EnemyCheck_PlayerInSight : EnemyStatusCheck
         StatusCheckMessage data = new StatusCheckMessage();
         var messageType = MessageType.SIGHTED;
         data.message = "Player In Sight";
-        //needs to check with raycast for a clear view to attack.
+        //needs to check with raycast for a clear view.
         data.isInLineOfSight = isInLineOfSight;
         data.target = target;
         for(var i = 0; i < onEnemyCheckMessageReceivers.Count; ++i) {

@@ -27,6 +27,6 @@ public class EnemyBehavior : MonoBehaviour
         m_isPaused = false;
     }
     public virtual void ExecuteBehavior() {
-        Debug.Log("Executing behavior");
+        //Debug.Log("Executing behavior");
     }
 }

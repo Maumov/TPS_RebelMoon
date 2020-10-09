@@ -20,7 +20,7 @@ public class BulletController : MonoBehaviour
 
         Rigidbody rb = other.GetComponent<Rigidbody>();
         int i = 0;
-        Damageable dmg = other.GetComponent<Damageable>();
+        HitBox dmg = other.GetComponent<HitBox>();
         
 
         while(i < numCollisionEvents) {
