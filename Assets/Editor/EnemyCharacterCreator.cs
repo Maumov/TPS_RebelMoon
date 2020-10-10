@@ -15,6 +15,7 @@ public class EnemyCharacterCreator : EditorWindow
     bool patrol, attack;
     bool humanoid;
     Transform handPosition;
+    RuntimeAnimatorController animController;
     //----
     GameObject gameObject;
     [MenuItem("Window/Enemy Prefab Creator")]
@@ -28,6 +29,11 @@ public class EnemyCharacterCreator : EditorWindow
         GUILayout.Label("Base Settings", EditorStyles.boldLabel);
         prefabName = EditorGUILayout.TextField("Prefab name", prefabName);
         gameObject = EditorGUILayout.ObjectField("Game Object", gameObject, typeof(GameObject), true) as GameObject;
+        if(gameObject != null) {
+            animController = EditorGUILayout.ObjectField("Animator Controller", animController, typeof(RuntimeAnimatorController), true) as RuntimeAnimatorController;
+        } else {
+            animController = null;
+        }
         layer = EditorGUILayout.LayerField("Layer", layer);
         playerInFOV = EditorGUILayout.Toggle("Check player in FOV", playerInFOV);
         patrol = EditorGUILayout.Toggle("Patrol", patrol);
@@ -36,13 +42,15 @@ public class EnemyCharacterCreator : EditorWindow
         if(humanoid) {
             handPosition = EditorGUILayout.ObjectField("Right Hand Transform", handPosition, typeof(Transform), true) as Transform;
             //handPosition = (Transform)EditorGUILayout.ObjectField(new GUIContent("hand"), handPosition, typeof(Transform));
+        } else {
+            handPosition = null;
         }
 
         if(GUILayout.Button("Add components")) {
             AddComponents();
         }
 
-        if(GUILayout.Button("Add Components to Character and Create prefab.")) {
+        if(GUILayout.Button("Create as prefab.")) {
             CreatePrefab();
         }
         
@@ -50,7 +58,10 @@ public class EnemyCharacterCreator : EditorWindow
     void AddComponents() {
         gameObject.AddComponent<Damageable>();
         gameObject.AddComponent<EnemyController>();
-
+        if(animController != null) {
+            gameObject.GetComponent<Animator>().runtimeAnimatorController = animController;
+            gameObject.GetComponent<Animator>().applyRootMotion = false;
+        }
         if(playerInFOV) {
             gameObject.AddComponent<SphereCollider>();
             gameObject.AddComponent<EnemyCheck_PlayerInSight>();
