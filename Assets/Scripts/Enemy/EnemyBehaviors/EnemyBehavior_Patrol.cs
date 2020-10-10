@@ -17,7 +17,6 @@ public class EnemyBehavior_Patrol : EnemyBehavior
     }
 
     public override void Start() {
-        
         currentWaypointToGo = waypoints[currentWaypoint];
         SetDestinationToWaypoint();
     }

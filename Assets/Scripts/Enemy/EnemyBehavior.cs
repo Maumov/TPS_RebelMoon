@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     protected bool m_isPaused;
-
+    public List<MonoBehaviour> onUseMessageReceivers;
     public virtual void Awake() {
         m_isPaused = true;
     }
