@@ -913,8 +913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e97fc91bc05f44b92510a3d63ba574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  freelook: {fileID: 0}
+  cameraRig: {fileID: 8393841908791323664, guid: 0a0a279c5c44ae84f8c8dcbe5a1ca474,
+    type: 3}
   crouchSpeed: 5
   walkSpeed: 1.5
   runSpeed: 4.5

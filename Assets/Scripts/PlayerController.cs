@@ -5,8 +5,8 @@ using UnityEngine;
 using Message;
 public class PlayerController : MonoBehaviour, IMessageReceiver
 {
-    public Transform cam;
-    public CinemachineFreeLook freelook;
+    public GameObject cameraRig;
+    
     public float crouchSpeed;
     public float walkSpeed;
     public float runSpeed;
@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     public int currentWeapon = 0;
     public Transform hips;
 
+    Transform m_cam;
+    CinemachineFreeLook m_freelook;
     Animator m_Animator;
     CharacterController m_CharacterController;
     PlayerInput m_Input;
@@ -52,6 +54,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     
 
     private void Start() {
+        GameObject go = Instantiate(cameraRig, transform.position, Quaternion.identity);
+        m_cam = go.GetComponentInChildren<Camera>().transform;
+        m_freelook = go.GetComponentInChildren<CinemachineFreeLook>();
+
+        m_freelook.m_Follow = transform;
+        m_freelook.m_LookAt = transform;
+
         m_Animator = GetComponent<Animator>();
         m_Input = GetComponent<PlayerInput>();
         m_CharacterController = GetComponent<CharacterController>();
@@ -116,8 +125,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
 
     void AimingY() {
 
-        freelook.m_YAxis.m_InputAxisValue = m_Input.CameraInput.y;
-        float angle = Vector3.SignedAngle(transform.forward, cam.forward, transform.right );
+        m_freelook.m_YAxis.m_InputAxisValue = m_Input.CameraInput.y;
+        float angle = Vector3.SignedAngle(transform.forward, m_cam.forward, transform.right );
         m_AimY = -angle / 90f;
     }
 
@@ -133,7 +142,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
 
     void Shooting() {
         if(m_Input.Attack || m_Input.AttackDown || m_Input.AttackUp) {
-            m_Gear.Attack(cam.transform, m_Input.AttackDown, m_Input.AttackUp);
+            m_Gear.Attack(m_cam.transform, m_Input.AttackDown, m_Input.AttackUp);
         }
 
         if(m_Input.Attack2) {
