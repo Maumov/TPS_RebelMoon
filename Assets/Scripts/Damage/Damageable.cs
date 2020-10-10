@@ -6,7 +6,7 @@ using Message;
 
 public class Damageable : MonoBehaviour
 {
-    public float maxHitPoints;
+    public float maxHitPoints = 100f;
 
     public float currentHitPoints;
 
