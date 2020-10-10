@@ -657,6 +657,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onUseMessageReceivers: []
   timeBetweenAttacks: 3
+--- !u!114 &637048862 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1250635589564615861, guid: 7e9f38caa776a3245b64ac8217ec7494,
+    type: 3}
+  m_PrefabInstance: {fileID: 3854152737044157661}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b990343d8c980d439d3d0124e8b8adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &788297360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,6 +1745,51 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1250635589564615861, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: waypoints.Array.data[1].position.z
+      value: 10.408249
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250635589564615861, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: waypoints.Array.data[1].position.x
+      value: 11.329823
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423922602511492591, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: OnEnemyStart.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423922602511492591, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: OnEnemyStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423922602511492591, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: OnEnemyStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423922602511492591, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: OnEnemyStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 637048862}
+    - target: {fileID: 2423922602511492591, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: OnEnemyStart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EnemyBehavior_Patrol, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423922602511492591, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: OnEnemyStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423922602511492591, guid: 7e9f38caa776a3245b64ac8217ec7494,
+        type: 3}
+      propertyPath: OnEnemyStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4666005092846768964, guid: 7e9f38caa776a3245b64ac8217ec7494,
         type: 3}
       propertyPath: m_Name

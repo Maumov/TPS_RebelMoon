@@ -17,8 +17,7 @@ public class EnemyBehavior_Patrol : EnemyBehavior
     }
 
     public override void Start() {
-        currentWaypointToGo = waypoints[currentWaypoint];
-        SetDestinationToWaypoint();
+        
     }
 
     public override void Pause() {
@@ -28,6 +27,8 @@ public class EnemyBehavior_Patrol : EnemyBehavior
 
     public override void Resume() {
         base.Resume();
+        currentWaypointToGo = waypoints[currentWaypoint];
+        SetDestinationToWaypoint();
         agent.isStopped = false;
     }
 
