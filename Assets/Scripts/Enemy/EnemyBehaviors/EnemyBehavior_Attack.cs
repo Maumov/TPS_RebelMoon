@@ -7,13 +7,14 @@ using UnityEngine.AI;
 public class EnemyBehavior_Attack : EnemyBehavior
 {
     public float timeBetweenAttacks;
-    
+    public Weapon weapon;
+    public Transform weaponPosition;
     float nextAttack;
     EnemyController enemyController;
     Transform _target;
-    NavMeshAgent agent;
+    //NavMeshAgent agent;
     Transform aimTransform;
-    Weapon weapon;
+    
     public override void Start() {
         GameObject go = new GameObject();
         go.transform.SetParent(transform);
@@ -21,7 +22,7 @@ public class EnemyBehavior_Attack : EnemyBehavior
         aimTransform.localPosition = new Vector3(0f, 1.3f, 0f);
 
         base.Start();
-
+        Instantiate(weapon, weaponPosition);
     }
 
     public Transform Target {
@@ -69,7 +70,7 @@ public class EnemyBehavior_Attack : EnemyBehavior
 
     private void OnEnable() {
         enemyController = GetComponent<EnemyController>();
-        agent = GetComponent<NavMeshAgent>();
+        //agent = GetComponent<NavMeshAgent>();
     }
     private void OnDisable() {
 

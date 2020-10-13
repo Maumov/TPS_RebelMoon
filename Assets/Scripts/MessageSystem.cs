@@ -14,7 +14,9 @@ namespace Message
         RELOAD,
         EQUIP,
         SIGHTED,
-
+        INTERACT,
+        WALK,
+        IDLE,
     }
 
     public interface IMessageReceiver

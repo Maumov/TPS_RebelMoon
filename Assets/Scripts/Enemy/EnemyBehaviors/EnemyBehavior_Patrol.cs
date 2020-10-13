@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Message;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,7 +20,7 @@ public class EnemyBehavior_Patrol : EnemyBehavior
     public override void Start() {
         
     }
-
+    
     public override void Pause() {
         base.Pause();
         agent.isStopped = true;
@@ -43,9 +44,21 @@ public class EnemyBehavior_Patrol : EnemyBehavior
             currentWaypointToGo = waypoints[currentWaypoint % waypoints.Count];
             SetDestinationToWaypoint();
         }
+        EnemyMoveMessage data;
+        data.velocity = agent.velocity.magnitude > 0.25f? 1f : 0f;
+        var messageType = MessageType.WALK;
+        for(var i = 0; i < onUseMessageReceivers.Count; ++i) {
+            var receiver = onUseMessageReceivers[i] as IMessageReceiver;
+            receiver.OnReceiveMessage(messageType, this, data);
+        }
     }
 
     void SetDestinationToWaypoint() {
         agent.SetDestination(currentWaypointToGo.position);
+    }
+
+    public struct EnemyMoveMessage
+    {
+        public float velocity;
     }
 }

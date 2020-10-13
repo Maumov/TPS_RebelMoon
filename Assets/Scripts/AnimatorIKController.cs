@@ -21,6 +21,10 @@ public class AnimatorIKController : MonoBehaviour
     void WeaponSwitch() {
 
     }
+
+    void Activate() {
+    
+    }
 }
 
 [System.Serializable]

@@ -80,9 +80,11 @@ public class EnemyCharacterCreator : EditorWindow
             g.name = "Weapon Position";
             g.transform.SetParent(handPosition);
             g.transform.localPosition = new Vector3(14.07f, 2.86f, -3.16f);
-            ;
             g.transform.localRotation = Quaternion.Euler(0f, 90f, -90f);
             g.transform.localScale = new Vector3(100f, 100f, 100f);
+            if(attack) {
+                gameObject.GetComponent<EnemyBehavior_Attack>().weaponPosition = g.transform;
+            }
             //humanoid weapon position and everything else.
         }
     }

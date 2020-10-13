@@ -66,7 +66,14 @@ public class PlayerInput : MonoBehaviour
             return m_Pause;
         }
     }
-    
+
+    protected bool m_Interact;
+    public bool Interact {
+        get {
+            return m_Interact;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,6 +91,7 @@ public class PlayerInput : MonoBehaviour
         m_AttackUp = Input.GetButtonUp("Fire1");
         m_Attack2 = Input.GetButton("Fire2");
         m_Reload = Input.GetButton("Reload");
+        m_Interact = Input.GetButtonDown("Interact");
     }
 
 

@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 5880654936407053724}
   - component: {fileID: 5880654936407053725}
   - component: {fileID: 5880654936407053722}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: WeaponSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1506f010e7d5d9548a7fbc558db879f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponPrefab: {fileID: 765202755573617835, guid: c931e744c91e8a946bccfef33bf92c50,
+  itemToReceive: {fileID: 765202755573617835, guid: c931e744c91e8a946bccfef33bf92c50,
     type: 3}
   Visuals: {fileID: 5880654935362839713}
   modelToShow: {fileID: 1142781627598564, guid: f7438e1cb3478464eabbd372577f5d7a,

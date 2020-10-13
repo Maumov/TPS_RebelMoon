@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponDrop : MonoBehaviour
+public class ItemDrop : MonoBehaviour, ICollectable
 {
-    public GameObject WeaponPrefab;
+    public GameObject itemToReceive;
 
     public Transform Visuals;
 
@@ -16,7 +16,17 @@ public class WeaponDrop : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         Gear g = other.GetComponent<Gear>();
         if(g != null) {
-            g.AddWeapon(WeaponPrefab.GetComponent<Weapon>());
+            OnCollect(g);
         } 
     }
+
+    public void OnCollect(Gear g) {
+        g.AddWeapon(itemToReceive.GetComponent<Weapon>());
+    }
+}
+
+public interface ICollectable
+{
+    void OnCollect(Gear g);
+
 }

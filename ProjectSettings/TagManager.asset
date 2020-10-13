@@ -21,8 +21,8 @@ TagManager:
   - FX
   - EnemyRange
   - HitBox
-  - 
-  - 
+  - Interactable
+  - Collectable
   - 
   - 
   - 

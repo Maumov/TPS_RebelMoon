@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     PlayerInput m_Input;
     Damageable m_Damageable;
     Gear m_Gear;
+    Interaction m_Interaction;
 
     bool m_IsGrounded = true;
     bool m_ReadyToJump;
@@ -51,7 +52,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     readonly int m_HashJump = Animator.StringToHash("Jump");
     readonly int m_HashLanded = Animator.StringToHash("Landed");
     readonly int m_HashFire = Animator.StringToHash("Weapon_Aim_Fire");
-    
+    readonly int m_HashInteract = Animator.StringToHash("Interact");
+
 
     private void Start() {
         GameObject go = Instantiate(cameraRig, transform.position, Quaternion.identity);
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
         AimingY();
         AimingX();
         Shooting();
+        Interact();
         SetAnimatorValues();
     }
 
@@ -154,6 +157,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
         }
     }
 
+    void Interact() {
+        if(m_Input.Interact) {
+            m_Interaction.Execute();
+        }
+    }
+
     void SetAnimatorValues() {
         moveDirection *= currentSpeed;
         moveDirection.y = m_VerticalSpeed;
@@ -176,6 +185,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
         m_Damageable.onDamageMessageReceivers.Add(this);
         m_Gear = GetComponent<Gear>();
         m_Gear.OnGearUse.Add(this);
+        m_Interaction = GetComponent<Interaction>();
+        m_Interaction.onUseMessageReceivers.Add(this);
+
     }
     private void OnDisable() {
         m_Damageable.onDamageMessageReceivers.Remove(this);
@@ -211,6 +223,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
                     currentWeapon = 1;
                 }
                 break;
+            case MessageType.INTERACT: {
+                    Interaction.InteractionMessage interactionData = (Interaction.InteractionMessage)data;
+                    Interacting();
+                }
+                break;
         }
     }
 
@@ -234,5 +251,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
 
     public void Reloading() {
         m_Animator.SetTrigger(m_HashReload);
+    }
+
+    public void Interacting() {
+        m_Animator.SetTrigger(m_HashInteract);
     }
 }

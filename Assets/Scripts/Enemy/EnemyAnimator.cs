@@ -81,6 +81,15 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
 
                 }
             break;
+            case MessageType.WALK: {
+                EnemyBehavior_Patrol.EnemyMoveMessage walkData = (EnemyBehavior_Patrol.EnemyMoveMessage)data;
+                MovementSpeed(walkData);
+                }
+            break;
+            case MessageType.IDLE: {
+
+                }
+            break;
         }
     }
 
@@ -103,5 +112,17 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
 
     public void Reloading() {
         m_Animator.SetTrigger(m_HashReload);
+    }
+
+    public void MovementSpeed(EnemyBehavior_Patrol.EnemyMoveMessage data) {
+        m_Animator.SetFloat(m_HashmoveInputMagnitude, data.velocity);
+    }
+
+    void FootR() {
+    
+    }
+
+    void FootL() {
+    
     }
 }
