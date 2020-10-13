@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 1333254009885871892}
   - component: {fileID: -6500552396873956024}
   m_Layer: 12
-  m_Name: Rifle M4
+  m_Name: Rifle M4 Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -488,7 +488,7 @@ MonoBehaviour:
   reloadTime: 2
   layerMask:
     serializedVersion: 2
-    m_Bits: 7425
+    m_Bits: 7680
 --- !u!82 &-6500552396873956024
 AudioSource:
   m_ObjectHideFlags: 0

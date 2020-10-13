@@ -7,7 +7,9 @@ using UnityEngine.AI;
 public class EnemyBehavior_Attack : EnemyBehavior
 {
     public float timeBetweenAttacks;
-    public Weapon weapon;
+    public Weapon weaponToEquip;
+    public GameObject weaponEquipped;
+    Weapon weapon;
     public Transform weaponPosition;
     float nextAttack;
     EnemyController enemyController;
@@ -22,7 +24,10 @@ public class EnemyBehavior_Attack : EnemyBehavior
         aimTransform.localPosition = new Vector3(0f, 1.3f, 0f);
 
         base.Start();
-        Instantiate(weapon, weaponPosition);
+        weaponEquipped = Instantiate(weaponToEquip.gameObject, weaponPosition);
+        weaponEquipped.transform.localPosition = Vector3.zero;
+        weaponEquipped.transform.localRotation = Quaternion.identity;
+        weapon = weaponEquipped.GetComponent<Weapon>();
     }
 
     public Transform Target {
@@ -40,6 +45,7 @@ public class EnemyBehavior_Attack : EnemyBehavior
 
     public override void Resume() {
         _target = enemyController.currentTarget;
+        nextAttack = Time.time + timeBetweenAttacks;
         base.Resume();
     }
 
@@ -49,17 +55,36 @@ public class EnemyBehavior_Attack : EnemyBehavior
         }
         base.ExecuteBehavior();
         transform.LookAt(new Vector3(_target.position.x, transform.position.y, _target.position.z));
+        Aim();
+        
+        
+
         if(Time.time > nextAttack) {
             Attack();
         }
     }
 
+    float aimAngle;
+    void Aim() {
+        aimAngle = Vector3.SignedAngle(_target.position - transform.position, transform.forward, transform.right);
+        aimAngle = aimAngle / 90f;
+        EnemyAttackMessage data;
+        data.someValue = aimAngle;
+        var messageType = MessageType.AIM;
+        for(var i = 0; i < onUseMessageReceivers.Count; ++i) {
+            var receiver = onUseMessageReceivers[i] as IMessageReceiver;
+            receiver.OnReceiveMessage(messageType, this, data);
+        }
+        aimTransform.LookAt(_target.position + new Vector3(0f, 1.3f, 0f));
+        Debug.DrawRay(aimTransform.position, aimTransform.forward * 100f, Color.yellow, 0.3f);
+    }
+
     void Attack() {
-        Debug.Log("Attacked");
+        //Debug.Log("Attacked");
         nextAttack = Time.time + timeBetweenAttacks;
         weapon.Fire(aimTransform);
 
-        Weapon.WeaponUseMessage data;
+        EnemyAttackMessage data;
         data.someValue = 0f;
         var messageType = MessageType.FIRE;
         for(var i = 0; i < onUseMessageReceivers.Count; ++i) {
@@ -76,4 +101,9 @@ public class EnemyBehavior_Attack : EnemyBehavior
 
 
     }
+    public struct EnemyAttackMessage
+    {
+        public float someValue;
+    }
+
 }

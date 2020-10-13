@@ -64,6 +64,7 @@ public class EnemyCharacterCreator : EditorWindow
         }
         if(playerInFOV) {
             gameObject.AddComponent<SphereCollider>();
+            gameObject.GetComponent<SphereCollider>().isTrigger = true;
             gameObject.AddComponent<EnemyCheck_PlayerInSight>();
             gameObject.layer = layer;
         }

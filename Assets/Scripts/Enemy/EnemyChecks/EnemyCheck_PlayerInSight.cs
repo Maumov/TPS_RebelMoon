@@ -43,6 +43,7 @@ public class EnemyCheck_PlayerInSight : EnemyStatusCheck
             player = null;
             if(IsInSight) {
                 SendMessageToAllMessageReceivers(false, null);
+                IsInSight = false;
             }
         }
     }

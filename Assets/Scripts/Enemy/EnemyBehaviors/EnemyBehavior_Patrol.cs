@@ -29,7 +29,7 @@ public class EnemyBehavior_Patrol : EnemyBehavior
     public override void Resume() {
         base.Resume();
         currentWaypointToGo = waypoints[currentWaypoint];
-        SetDestinationToWaypoint();
+        StartCoroutine(DelayBetweenWaypoints());
         agent.isStopped = false;
     }
 
@@ -40,9 +40,10 @@ public class EnemyBehavior_Patrol : EnemyBehavior
         base.ExecuteBehavior();
         if(agent.remainingDistance <= 0.5f) {
             currentWaypoint++;
-            
-            currentWaypointToGo = waypoints[currentWaypoint % waypoints.Count];
-            SetDestinationToWaypoint();
+            currentWaypoint = currentWaypoint % waypoints.Count;
+            currentWaypointToGo = waypoints[currentWaypoint];
+            StartCoroutine(DelayBetweenWaypoints());
+            //SetDestinationToWaypoint();
         }
         EnemyMoveMessage data;
         data.velocity = agent.velocity.magnitude > 0.25f? 1f : 0f;
@@ -55,6 +56,12 @@ public class EnemyBehavior_Patrol : EnemyBehavior
 
     void SetDestinationToWaypoint() {
         agent.SetDestination(currentWaypointToGo.position);
+    }
+
+    public float timeInWaypoint = 2f;
+    IEnumerator DelayBetweenWaypoints() {
+        yield return new WaitForSeconds(timeInWaypoint);
+        SetDestinationToWaypoint();
     }
 
     public struct EnemyMoveMessage

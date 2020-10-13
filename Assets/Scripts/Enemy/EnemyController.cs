@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour, IMessageReceiver
             case MessageType.RESPAWN:
             break;
             case MessageType.FIRE:
+            //EnemyAttackMessage
             break;
             case MessageType.RELOAD:
             break;
@@ -37,7 +38,7 @@ public class EnemyController : MonoBehaviour, IMessageReceiver
             break;
             case MessageType.SIGHTED:
             StatusCheckMessage data = (StatusCheckMessage)msg;
-            Debug.Log(data.isInLineOfSight);
+            //Debug.Log(data.isInLineOfSight);
             if(data.isInLineOfSight) {
                 Debug.Log(data.target.name);
                 currentTarget = data.target;

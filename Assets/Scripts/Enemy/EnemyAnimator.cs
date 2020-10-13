@@ -2,40 +2,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EnemyBehavior_Attack;
 
 public class EnemyAnimator : MonoBehaviour, IMessageReceiver
 {
     Animator m_Animator;
-    EnemyBehavior[] m_EnemyBehaviors; 
+    EnemyBehavior[] m_EnemyBehaviors;
+    EnemyStatusCheck[] m_EnemyChecks;
 
-    readonly int m_HashVertical = Animator.StringToHash("Vertical");
-    readonly int m_HashHorizontal = Animator.StringToHash("Horizontal");
+    //readonly int m_HashVertical = Animator.StringToHash("Vertical");
+    //readonly int m_HashHorizontal = Animator.StringToHash("Horizontal");
     readonly int m_HashmoveInputMagnitude = Animator.StringToHash("Move Input Magnitude");
     readonly int m_HashAimY = Animator.StringToHash("Aim Y");
-    readonly int m_HashAimX = Animator.StringToHash("Aim X");
-    readonly int m_HashCurrentWeapon = Animator.StringToHash("Current Weapon");
+    //readonly int m_HashAimX = Animator.StringToHash("Aim X");
+    //readonly int m_HashCurrentWeapon = Animator.StringToHash("Current Weapon");
+    readonly int m_HashAttacking = Animator.StringToHash("Attacking");
     readonly int m_HashFireWeapon = Animator.StringToHash("Fire");
     readonly int m_HashReload = Animator.StringToHash("Reload");
     readonly int m_HashHurt = Animator.StringToHash("Get Hit");
     readonly int m_HashDeath = Animator.StringToHash("Dead");
-    readonly int m_HashJump = Animator.StringToHash("Jump");
-    readonly int m_HashLanded = Animator.StringToHash("Landed");
-    readonly int m_HashFire = Animator.StringToHash("Weapon_Aim_Fire");
+    //readonly int m_HashJump = Animator.StringToHash("Jump");
+    //readonly int m_HashLanded = Animator.StringToHash("Landed");
+    readonly int m_HashFire = Animator.StringToHash("Weapon_Fire");
     private void Start() {
         m_Animator = GetComponent<Animator>();
     }
 
     private void OnEnable() {
         m_Animator = GetComponent<Animator>();
-
         m_EnemyBehaviors = GetComponents<EnemyBehavior>();
         foreach(EnemyBehavior eb in m_EnemyBehaviors) {
             eb.onUseMessageReceivers.Add(this);
+        }
+        m_EnemyChecks = GetComponents<EnemyStatusCheck>();
+        foreach(EnemyStatusCheck e in m_EnemyChecks) {
+            e.onEnemyCheckMessageReceivers.Add(this);
         }
     }
     private void OnDisable() {
         foreach(EnemyBehavior eb in m_EnemyBehaviors) {
             eb.onUseMessageReceivers.Remove(this);
+        }
+        foreach(EnemyStatusCheck e in m_EnemyChecks) {
+            e.onEnemyCheckMessageReceivers.Remove(this);
         }
     }
 
@@ -62,7 +71,7 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
 
             break;
             case MessageType.FIRE: {
-                    Weapon.WeaponUseMessage itemData = (Weapon.WeaponUseMessage)data;
+                    EnemyAttackMessage itemData = (EnemyAttackMessage)data;
                     BulletFired();
                 }
 
@@ -78,7 +87,8 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
                 }
             break;
             case MessageType.SIGHTED: {
-
+                    EnemyStatusCheck.StatusCheckMessage itemData = (EnemyStatusCheck.StatusCheckMessage)data;
+                    Attacking(itemData.isInLineOfSight);
                 }
             break;
             case MessageType.WALK: {
@@ -90,6 +100,11 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
 
                 }
             break;
+            case MessageType.AIM: {
+                    EnemyAttackMessage itemData = (EnemyAttackMessage)data;
+                    AimY(itemData);
+                }
+                break;
         }
     }
 
@@ -106,7 +121,7 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
     }
 
     public void BulletFired() {
-        m_Animator.Play(m_HashFire, 1);
+        m_Animator.Play(m_HashFire, 0);
         //m_Animator.SetTrigger(m_HashFireWeapon);
     }
 
@@ -118,11 +133,23 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
         m_Animator.SetFloat(m_HashmoveInputMagnitude, data.velocity);
     }
 
+    public void AimY(EnemyAttackMessage data) {
+        m_Animator.SetFloat(m_HashAimY, data.someValue);
+    }
+
+    public void Attacking(bool val) {
+        m_Animator.SetBool(m_HashAttacking,val);
+    }
+
     void FootR() {
     
     }
 
     void FootL() {
+    
+    }
+
+    void Shoot() {
     
     }
 }

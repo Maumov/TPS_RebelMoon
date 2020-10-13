@@ -17,6 +17,7 @@ namespace Message
         INTERACT,
         WALK,
         IDLE,
+        AIM,
     }
 
     public interface IMessageReceiver

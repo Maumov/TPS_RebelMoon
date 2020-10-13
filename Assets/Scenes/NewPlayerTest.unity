@@ -643,6 +643,7 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
     areaRadius: 1
     connections: 
+  timeInWaypoint: 0
 --- !u!114 &440786741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +658,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onUseMessageReceivers: []
   timeBetweenAttacks: 3
-  weapon: {fileID: 0}
+  weaponToEquip: {fileID: 0}
+  weaponEquipped: {fileID: 0}
   weaponPosition: {fileID: 0}
 --- !u!1 &788297360
 GameObject:
@@ -1926,10 +1928,58 @@ MonoBehaviour:
         m_CallState: 2
   OnEnemySighted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2605214804518377576}
+        m_TargetAssemblyTypeName: EnemyBehavior_Patrol, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5295389337738793215}
+        m_TargetAssemblyTypeName: EnemyBehavior_Attack, Assembly-CSharp
+        m_MethodName: Resume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnEnemyLostSight:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5295389337738793215}
+        m_TargetAssemblyTypeName: EnemyBehavior_Attack, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2605214804518377576}
+        m_TargetAssemblyTypeName: EnemyBehavior_Patrol, Assembly-CSharp
+        m_MethodName: Resume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1985662308174162933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1954,7 +2004,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8483736713344468889}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -1976,13 +2026,14 @@ MonoBehaviour:
   - position: {x: 0, y: 0, z: -6.14}
     areaRadius: 1
     connections: 01000000
-  - position: {x: 8.460842, y: 0, z: 6.4711747}
+  - position: {x: -16.88329, y: 0, z: 14.919203}
     areaRadius: 1
     connections: 00000000
   currentWaypointToGo:
     position: {x: 0, y: 0, z: 0}
     areaRadius: 1
     connections: 
+  timeInWaypoint: 2
 --- !u!114 &4569417282681708824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2018,7 +2069,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onUseMessageReceivers: []
   timeBetweenAttacks: 1
-  weapon: {fileID: 1333254009885871892, guid: c931e744c91e8a946bccfef33bf92c50, type: 3}
+  weaponToEquip: {fileID: 1333254009885871892, guid: 58bc02771f7a8374894af7e1705e0c6c,
+    type: 3}
+  weaponEquipped: {fileID: 0}
   weaponPosition: {fileID: 1122681467956102928}
 --- !u!114 &5653873987543301855
 MonoBehaviour:
@@ -2033,8 +2086,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onEnemyCheckMessageReceivers: []
-  angleOfLineOfSight: 0
-  RangeOfSight: 0
+  angleOfLineOfSight: 60
+  RangeOfSight: 10
   IsInSight: 0
 --- !u!1001 &5880654934874612129
 PrefabInstance:
@@ -2118,8 +2171,8 @@ NavMeshAgent:
   m_Speed: 2.3
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
-  m_StoppingDistance: 0
+  m_AngularSpeed: 260
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3029,7 +3082,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ecb0107991714ba42b48a689787ca28b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1

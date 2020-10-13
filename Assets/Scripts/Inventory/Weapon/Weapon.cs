@@ -48,7 +48,7 @@ public class Weapon : MonoBehaviour
             hit = new RaycastHit();
 
             if(Physics.Raycast(ray, out hit, 100f, layerMask)) {
-                //Debug.Log(hit.collider.name);
+                Debug.Log(hit.collider.name);
                 
                 Vector3 bulletSpawnForward = hit.point - bulletSpawnPosition.transform.position;
                 //Debug.Log("Forward: " + bulletSpawnForward);
@@ -69,7 +69,7 @@ public class Weapon : MonoBehaviour
                 var receiver = onUseMessageReceivers[i] as IMessageReceiver;
                 receiver.OnReceiveMessage(messageType, this, data);
             }
-            Debug.DrawRay(bulletSpawnPosition.transform.position, bulletSpawnPosition.forward * 100f, Color.red, 0.3f);
+            Debug.DrawRay(bulletSpawnPosition.position, bulletSpawnPosition.forward * 100f, Color.red, 0.3f);
         } else {
             Reload();
         }
