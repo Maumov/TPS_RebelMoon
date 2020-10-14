@@ -16,7 +16,7 @@ public class Interaction : MonoBehaviour
         ray.origin = transform.position + new Vector3(0f,1f,0f);
         ray.direction = transform.forward;
         if(Physics.Raycast(ray, out hit,1f,interactionLayerMask)) {
-            hit.collider.GetComponent<IInteractable>().OnInteract();
+            hit.collider.GetComponent<IInteractable>().OnInteract(GetComponent<Gear>());
             InteractionMessage data;
             data.someValue = 0f;
             var messageType = MessageType.INTERACT;
@@ -26,8 +26,6 @@ public class Interaction : MonoBehaviour
             }
 
         }
-
-        
     }
     public struct InteractionMessage
     {

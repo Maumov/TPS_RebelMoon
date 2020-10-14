@@ -10,10 +10,14 @@ public class Gear : MonoBehaviour
     public Weapon CurrentlyEquipped;
     public GameObject currentWeaponGameObject;
     public List<Weapon> WeaponInventory;
-
+    public List<Item> ItemsInventory;
     public List<MonoBehaviour> OnGearUse;
 
     private void Start() {
+    }
+
+    public void AddItem(Item i) {
+        
     }
 
     public void AddWeapon(Weapon w) {
@@ -74,6 +78,15 @@ public class Gear : MonoBehaviour
 
     public void Attack2() {
 
+    }
+
+    public bool HasItemId(int id) {
+        foreach(Item i in ItemsInventory) {
+            if(i.id == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public struct ItemMessage

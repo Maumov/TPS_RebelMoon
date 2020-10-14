@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour, ICollectable
 {
+   
     public GameObject itemToReceive;
-
-    public Transform Visuals;
-
-    public GameObject modelToShow;
-    private void Start() {
-        Instantiate(modelToShow, Visuals);
-    }
 
     private void OnTriggerEnter(Collider other) {
         Gear g = other.GetComponent<Gear>();
@@ -20,8 +14,12 @@ public class ItemDrop : MonoBehaviour, ICollectable
         } 
     }
 
-    public void OnCollect(Gear g) {
-        g.AddWeapon(itemToReceive.GetComponent<Weapon>());
+    public virtual void OnCollect(Gear g) {
+        g.AddItem(itemToReceive.GetComponent<Item>());
+    }
+
+    public enum ItemType{
+        Weapon, Key
     }
 }
 

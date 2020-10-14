@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Message;
-public class Weapon : MonoBehaviour
+public class Weapon : Item
 {
-    public int id;
-
+    
     public int currentBullets;
     public int bulletsPerMagazine;
     public float damage;
@@ -30,7 +29,7 @@ public class Weapon : MonoBehaviour
     RaycastHit hit;
     public LayerMask layerMask;
     float nextShot;
-    public void Attack(Transform viewCamera , bool buttonDown, bool buttonUp) {
+    public override void Attack(Transform viewCamera , bool buttonDown, bool buttonUp) {
         if(isAutomatic) {
             if(nextShot < Time.time) {
                 Fire(viewCamera);
@@ -95,7 +94,7 @@ public class Weapon : MonoBehaviour
     }
 
 
-    public void Attack2() {
+    public override void Attack2() {
 
     }
 
