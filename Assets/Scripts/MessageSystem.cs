@@ -18,6 +18,7 @@ namespace Message
         WALK,
         IDLE,
         AIM,
+        ATTACKING,
     }
 
     public interface IMessageReceiver

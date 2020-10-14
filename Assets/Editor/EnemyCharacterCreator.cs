@@ -14,6 +14,7 @@ public class EnemyCharacterCreator : EditorWindow
     bool playerInFOV;
     bool patrol, attack;
     bool humanoid;
+    bool hitbox;
     Transform handPosition;
     RuntimeAnimatorController animController;
     //----
@@ -45,6 +46,7 @@ public class EnemyCharacterCreator : EditorWindow
         } else {
             handPosition = null;
         }
+        hitbox = EditorGUILayout.Toggle("hit box", hitbox);
 
         if(GUILayout.Button("Add components")) {
             AddComponents();
@@ -69,7 +71,6 @@ public class EnemyCharacterCreator : EditorWindow
             gameObject.layer = layer;
         }
         if(patrol) {
-
             gameObject.AddComponent<NavMeshAgent>();
             gameObject.AddComponent<EnemyBehavior_Patrol>();
         }
@@ -87,6 +88,20 @@ public class EnemyCharacterCreator : EditorWindow
                 gameObject.GetComponent<EnemyBehavior_Attack>().weaponPosition = g.transform;
             }
             //humanoid weapon position and everything else.
+        }
+        if(hitbox) {
+            GameObject g = new GameObject();
+            g.name = "hit Box";
+            g.transform.SetParent(gameObject.transform);
+            g.transform.localPosition = new Vector3(0f, 0f, 0f);
+            g.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            g.transform.localScale = new Vector3(1f, 1f, 1f);
+            g.layer = 15;
+            g.AddComponent<CapsuleCollider>();
+            CapsuleCollider col = g.GetComponent<CapsuleCollider>();
+            col.radius = 0.25f;
+            col.height = 1.8f;
+            g.AddComponent<HitBox>();
         }
     }
 

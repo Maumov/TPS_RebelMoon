@@ -4885,7 +4885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4979ad43f61a3d4f9eb306887a140fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 10
   wallHitFX: {fileID: 6134028542216885939, guid: b252bf2750e8c664a88e0fea6fdb3043,
     type: 3}
 --- !u!82 &2641101122915103527

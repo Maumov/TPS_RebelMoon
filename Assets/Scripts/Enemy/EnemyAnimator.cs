@@ -7,9 +7,7 @@ using static EnemyBehavior_Attack;
 public class EnemyAnimator : MonoBehaviour, IMessageReceiver
 {
     Animator m_Animator;
-    EnemyBehavior[] m_EnemyBehaviors;
-    EnemyStatusCheck[] m_EnemyChecks;
-
+    EnemyController m_EnemyController;
     //readonly int m_HashVertical = Animator.StringToHash("Vertical");
     //readonly int m_HashHorizontal = Animator.StringToHash("Horizontal");
     readonly int m_HashmoveInputMagnitude = Animator.StringToHash("Move Input Magnitude");
@@ -17,7 +15,7 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
     //readonly int m_HashAimX = Animator.StringToHash("Aim X");
     //readonly int m_HashCurrentWeapon = Animator.StringToHash("Current Weapon");
     readonly int m_HashAttacking = Animator.StringToHash("Attacking");
-    readonly int m_HashFireWeapon = Animator.StringToHash("Fire");
+    //readonly int m_HashFireWeapon = Animator.StringToHash("Fire");
     readonly int m_HashReload = Animator.StringToHash("Reload");
     readonly int m_HashHurt = Animator.StringToHash("Get Hit");
     readonly int m_HashDeath = Animator.StringToHash("Dead");
@@ -29,23 +27,14 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
     }
 
     private void OnEnable() {
+        
         m_Animator = GetComponent<Animator>();
-        m_EnemyBehaviors = GetComponents<EnemyBehavior>();
-        foreach(EnemyBehavior eb in m_EnemyBehaviors) {
-            eb.onUseMessageReceivers.Add(this);
-        }
-        m_EnemyChecks = GetComponents<EnemyStatusCheck>();
-        foreach(EnemyStatusCheck e in m_EnemyChecks) {
-            e.onEnemyCheckMessageReceivers.Add(this);
-        }
+        m_EnemyController = GetComponent<EnemyController>();
+        m_EnemyController.onMessageReceivers.Add(this);
+
     }
     private void OnDisable() {
-        foreach(EnemyBehavior eb in m_EnemyBehaviors) {
-            eb.onUseMessageReceivers.Remove(this);
-        }
-        foreach(EnemyStatusCheck e in m_EnemyChecks) {
-            e.onEnemyCheckMessageReceivers.Remove(this);
-        }
+        m_EnemyController.onMessageReceivers.Remove(this);
     }
 
 
@@ -68,7 +57,6 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
             case MessageType.RESPAWN: {
                 
                 }
-
             break;
             case MessageType.FIRE: {
                     EnemyAttackMessage itemData = (EnemyAttackMessage)data;
@@ -77,7 +65,7 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
 
             break;
             case MessageType.RELOAD: {
-                    Weapon.WeaponUseMessage itemData = (Weapon.WeaponUseMessage)data;
+                    EnemyAttackMessage itemData = (EnemyAttackMessage)data;
                     Reloading();
                 }
             break;
@@ -105,24 +93,27 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
                     AimY(itemData);
                 }
                 break;
+            case MessageType.ATTACKING: {
+                    EnemyAttackMessage itemData = (EnemyAttackMessage)data;
+                    Attacking(itemData.isAttacking);
+                    
+                }
+                break;
         }
     }
 
     void Damaged(Damageable.DamageMessage damageMessage) {
         // Set the Hurt parameter of the animator.
         m_Animator.SetTrigger(m_HashHurt);
-
     }
 
     // Called by OnReceiveMessage and by DeathVolumes in the scene.
     public void Die(Damageable.DamageMessage damageMessage) {
         m_Animator.SetTrigger(m_HashDeath);
-
     }
 
     public void BulletFired() {
         m_Animator.Play(m_HashFire, 0);
-        //m_Animator.SetTrigger(m_HashFireWeapon);
     }
 
     public void Reloading() {
@@ -134,12 +125,15 @@ public class EnemyAnimator : MonoBehaviour, IMessageReceiver
     }
 
     public void AimY(EnemyAttackMessage data) {
-        m_Animator.SetFloat(m_HashAimY, data.someValue);
+        m_Animator.SetFloat(m_HashAimY, data.aimAngle);
     }
 
     public void Attacking(bool val) {
         m_Animator.SetBool(m_HashAttacking,val);
     }
+
+   
+
 
     void FootR() {
     

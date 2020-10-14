@@ -14,6 +14,15 @@ public class EnemyController : MonoBehaviour, IMessageReceiver
     public UnityEvent OnEnemyStart;
     public UnityEvent OnEnemySighted;
     public UnityEvent OnEnemyLostSight;
+
+    public UnityEvent OnEnemyHit;
+    public UnityEvent OnEnemyDead;
+
+    public List<MonoBehaviour> onMessageReceivers;
+
+    EnemyBehavior[] m_EnemyBehaviors;
+    Damageable m_Damageable;
+
     public virtual void Start() {
         OnEnemyStart.Invoke();
     }
@@ -24,33 +33,67 @@ public class EnemyController : MonoBehaviour, IMessageReceiver
 
         switch(type) {
             case MessageType.DAMAGED:
+                OnEnemyHit.Invoke();
+                SendMessage(type, msg);
             break;
             case MessageType.DEAD:
+                OnEnemyDead.Invoke();
+                SendMessage(type, msg);
             break;
             case MessageType.RESPAWN:
+                SendMessage(type, msg);
             break;
             case MessageType.FIRE:
-            //EnemyAttackMessage
+                SendMessage(type, msg);
             break;
             case MessageType.RELOAD:
+                SendMessage(type, msg);
             break;
             case MessageType.EQUIP:
+                SendMessage(type, msg);
             break;
             case MessageType.SIGHTED:
-            StatusCheckMessage data = (StatusCheckMessage)msg;
-            //Debug.Log(data.isInLineOfSight);
-            if(data.isInLineOfSight) {
-                Debug.Log(data.target.name);
-                currentTarget = data.target;
-                OnEnemySighted.Invoke();
-            } else {
-                currentTarget = null;
-                OnEnemyLostSight.Invoke();
-            }
+                StatusCheckMessage data = (StatusCheckMessage)msg;
+                if(data.isInLineOfSight) {
+           
+                    currentTarget = data.target;
+                    OnEnemySighted.Invoke();
+                } else {
+                    currentTarget = null;
+                    OnEnemyLostSight.Invoke();
+                }
             break;
+
+            case MessageType.INTERACT:
+                SendMessage(type, msg);
+            break;
+
+            case MessageType.WALK:
+                SendMessage(type, msg);
+            break;
+
+            case MessageType.IDLE:
+                SendMessage(type, msg);
+            break;
+
+            case MessageType.AIM:
+                SendMessage(type, msg);
+            break;
+
+            case MessageType.ATTACKING:
+                SendMessage(type, msg);
+            break;
+
             default:
             Debug.Log("Whatever");
             break;
+        }
+    }
+
+    void SendMessage(MessageType messageType, object data) {
+        for(var i = 0; i < onMessageReceivers.Count; ++i) {
+            var receiver = onMessageReceivers[i] as IMessageReceiver;
+            receiver.OnReceiveMessage(messageType, this, data);
         }
     }
 
@@ -59,12 +102,28 @@ public class EnemyController : MonoBehaviour, IMessageReceiver
         foreach(EnemyStatusCheck e in enemyChecks) {
             e.onEnemyCheckMessageReceivers.Add(this);
         }
+        GetComponent<Damageable>().onDamageMessageReceivers.Add(this);
+
+        m_EnemyBehaviors = GetComponents<EnemyBehavior>();
+        foreach(EnemyBehavior eb in m_EnemyBehaviors) {
+            eb.onUseMessageReceivers.Add(this);
+        }
+        m_Damageable = GetComponent<Damageable>();
+        m_Damageable.onDamageMessageReceivers.Add(this);
+
     }
     private void OnDisable() {
         EnemyStatusCheck[] enemyChecks = GetComponents<EnemyStatusCheck>();
         foreach(EnemyStatusCheck e in enemyChecks) {
             e.onEnemyCheckMessageReceivers.Remove(this);
         }
+        GetComponent<Damageable>().onDamageMessageReceivers.Remove(this);
+
+        foreach(EnemyBehavior eb in m_EnemyBehaviors) {
+            eb.onUseMessageReceivers.Remove(this);
+        }
+        m_Damageable.onDamageMessageReceivers.Remove(this);
+
     }
 }
 
