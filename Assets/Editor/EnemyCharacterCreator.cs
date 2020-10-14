@@ -39,14 +39,14 @@ public class EnemyCharacterCreator : EditorWindow
         playerInFOV = EditorGUILayout.Toggle("Check player in FOV", playerInFOV);
         patrol = EditorGUILayout.Toggle("Patrol", patrol);
         attack = EditorGUILayout.Toggle("Attack", attack);
-        humanoid = EditorGUILayout.Toggle("is Humanoid", humanoid);
+        humanoid = EditorGUILayout.Toggle("Is Humanoid", humanoid);
         if(humanoid) {
             handPosition = EditorGUILayout.ObjectField("Right Hand Transform", handPosition, typeof(Transform), true) as Transform;
             //handPosition = (Transform)EditorGUILayout.ObjectField(new GUIContent("hand"), handPosition, typeof(Transform));
         } else {
             handPosition = null;
         }
-        hitbox = EditorGUILayout.Toggle("hit box", hitbox);
+        hitbox = EditorGUILayout.Toggle("Hit box", hitbox);
 
         if(GUILayout.Button("Add components")) {
             AddComponents();

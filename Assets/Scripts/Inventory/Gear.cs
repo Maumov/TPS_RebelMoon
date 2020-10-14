@@ -17,7 +17,7 @@ public class Gear : MonoBehaviour
     }
 
     public void AddItem(Item i) {
-        
+        ItemsInventory.Add(i);
     }
 
     public void AddWeapon(Weapon w) {
@@ -32,6 +32,7 @@ public class Gear : MonoBehaviour
         if(currentWeaponSelected >= WeaponInventory.Count) {
             currentWeaponSelected = 0;
         }
+
         Equip();
     }
     public void EquipPreviousWeapon() {
