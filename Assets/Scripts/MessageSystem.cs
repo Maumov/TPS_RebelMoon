@@ -19,6 +19,7 @@ namespace Message
         IDLE,
         AIM,
         ATTACKING,
+        FORCE,
     }
 
     public interface IMessageReceiver

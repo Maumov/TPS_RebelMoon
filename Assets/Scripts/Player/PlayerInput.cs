@@ -52,6 +52,13 @@ public class PlayerInput : MonoBehaviour
             return m_Attack2;
         }
     }
+    protected bool m_Attack2Up;
+    public bool Attack2Up {
+        get {
+            return m_Attack2Up;
+        }
+    }
+
     protected bool m_Reload;
     public bool Reload {
         get {
@@ -90,8 +97,10 @@ public class PlayerInput : MonoBehaviour
         m_AttackDown = Input.GetButtonDown("Fire1");
         m_AttackUp = Input.GetButtonUp("Fire1");
         m_Attack2 = Input.GetButton("Fire2");
+        m_Attack2Up = Input.GetButtonUp("Fire2");
         m_Reload = Input.GetButton("Reload");
         m_Interact = Input.GetButtonDown("Interact");
+        
     }
 
 

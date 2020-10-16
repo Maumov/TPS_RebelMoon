@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     PlayerInput m_Input;
     Damageable m_Damageable;
     Gear m_Gear;
+    Force m_Force;
     Interaction m_Interaction;
 
     bool m_IsGrounded = true;
@@ -53,8 +54,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     readonly int m_HashLanded = Animator.StringToHash("Landed");
     readonly int m_HashFire = Animator.StringToHash("Weapon_Aim_Fire");
     readonly int m_HashInteract = Animator.StringToHash("Interact");
-
-
+    readonly int m_HashForce = Animator.StringToHash("Force");
+    
     private void Start() {
         GameObject go = Instantiate(cameraRig, transform.position, Quaternion.identity);
         m_cam = go.GetComponentInChildren<Camera>().transform;
@@ -63,10 +64,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
         m_freelook.m_Follow = transform;
         m_freelook.m_LookAt = transform;
 
-        m_Animator = GetComponent<Animator>();
-        m_Input = GetComponent<PlayerInput>();
-        m_CharacterController = GetComponent<CharacterController>();
-        m_Gear = GetComponent<Gear>();
     }
 
     void Update() {
@@ -148,8 +145,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
             m_Gear.Attack(m_cam.transform, m_Input.AttackDown, m_Input.AttackUp);
         }
 
-        if(m_Input.Attack2) {
-            m_Gear.Attack2();
+        if(m_Input.Attack2 || m_Input.Attack2Up) {
+            m_Force.Attack(m_cam.transform, m_Input.Attack2Up);
         }
 
         if(m_Input.Reload) {
@@ -181,12 +178,18 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
     
 
     private void OnEnable() {
+        m_Animator = GetComponent<Animator>();
+        m_Input = GetComponent<PlayerInput>();
+        m_CharacterController = GetComponent<CharacterController>();
+
         m_Damageable = GetComponent<Damageable>();
         m_Damageable.onDamageMessageReceivers.Add(this);
         m_Gear = GetComponent<Gear>();
         m_Gear.OnGearUse.Add(this);
         m_Interaction = GetComponent<Interaction>();
         m_Interaction.onUseMessageReceivers.Add(this);
+        m_Force = GetComponent<Force>();
+        m_Force.onUseMessageReceivers.Add(this);
 
     }
     private void OnDisable() {
@@ -228,6 +231,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
                     Interacting();
                 }
                 break;
+            case MessageType.FORCE: {
+                    Force.ForceMessage forceData = (Force.ForceMessage)data;
+                    usingForce(forceData.usingForce);
+                }
+                break;
         }
     }
 
@@ -255,5 +263,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver
 
     public void Interacting() {
         m_Animator.SetTrigger(m_HashInteract);
+    }
+
+    public void usingForce(bool value) {
+        //m_Animator.SetBool(m_HashForce, value);
     }
 }
