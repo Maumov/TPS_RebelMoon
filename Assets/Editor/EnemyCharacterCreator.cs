@@ -78,6 +78,7 @@ public class EnemyCharacterCreator : EditorWindow
             gameObject.AddComponent<EnemyBehavior_Attack>();
         }
         if(humanoid) {
+            gameObject.AddComponent<EnemyAnimator>();
             GameObject g = new GameObject();
             g.name = "Weapon Position";
             g.transform.SetParent(handPosition);
