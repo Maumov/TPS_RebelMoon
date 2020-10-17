@@ -963,6 +963,13 @@ MonoBehaviour:
   OnEnemyLostSight:
     m_PersistentCalls:
       m_Calls: []
+  OnEnemyHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnemyDead:
+    m_PersistentCalls:
+      m_Calls: []
+  onMessageReceivers: []
 --- !u!135 &1456127256082652824
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1026,11 +1033,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b990343d8c980d439d3d0124e8b8adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onUseMessageReceivers: []
   waypoints: []
   currentWaypointToGo:
     position: {x: 0, y: 0, z: 0}
     areaRadius: 1
     connections: 
+  timeInWaypoint: 2
 --- !u!114 &8935621002253173794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,7 +1052,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98d4cc06ec35e74ca39ca3c3e40f3c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onUseMessageReceivers: []
   timeBetweenAttacks: 0
+  weaponToEquip: {fileID: 0}
+  weaponEquipped: {fileID: 0}
+  weaponPosition: {fileID: 0}
 --- !u!114 &5382488768763052299
 MonoBehaviour:
   m_ObjectHideFlags: 0
