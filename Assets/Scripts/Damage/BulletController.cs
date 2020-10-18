@@ -25,14 +25,8 @@ public class BulletController : MonoBehaviour
 
         while(i < numCollisionEvents) {
             Instantiate(wallHitFX, collisionEvents[i].intersection, Quaternion.LookRotation(collisionEvents[i].normal));
-            if(rb) {
-                Debug.Log(rb.name);
-                Vector3 pos = collisionEvents[i].intersection;
-                Vector3 force = collisionEvents[i].velocity * 10;
-                rb.AddForce(force);
-            }
             if(dmg) {
-                Debug.Log(dmg.name);
+                Debug.Log("Hit box:" + dmg.name);
                 Damageable.DamageMessage data = new Damageable.DamageMessage();
                 data.damager = this;
                 data.amount = damage;
@@ -41,7 +35,16 @@ public class BulletController : MonoBehaviour
                 data.throwing = false;
                 data.stopCamera = false;
                 dmg.ApplyDamage(data);
+            } else {
+                if(rb) {
+                    Debug.Log("Rigidbody: " + rb.name);
+                    Vector3 pos = collisionEvents[i].intersection;
+                    Vector3 force = collisionEvents[i].velocity * 10;
+                    rb.AddForce(force);
+                }
             }
+            
+            
             i++;
         }
     }

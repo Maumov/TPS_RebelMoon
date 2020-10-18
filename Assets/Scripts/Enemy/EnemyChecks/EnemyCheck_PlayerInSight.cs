@@ -1,12 +1,12 @@
 ﻿using Message;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
 public class EnemyCheck_PlayerInSight : EnemyStatusCheck
 {
-    SphereCollider rangeTrigger;
+    EnemyDetectionRange rangeTrigger;
     public float angleOfLineOfSight;
     public float RangeOfSight;
 
@@ -16,8 +16,8 @@ public class EnemyCheck_PlayerInSight : EnemyStatusCheck
 
     public override void Start() {
         base.Start();
-        rangeTrigger = GetComponent<SphereCollider>();
-        rangeTrigger.radius = RangeOfSight;
+        rangeTrigger = GetComponentInChildren<EnemyDetectionRange>();
+        rangeTrigger.GetComponent<SphereCollider>().radius = RangeOfSight;
     }
 
 
@@ -31,22 +31,18 @@ public class EnemyCheck_PlayerInSight : EnemyStatusCheck
         }
     }
 
-    public virtual void OnTriggerEnter(Collider other) {
-        PlayerController pl = other.GetComponent<PlayerController>();
-        if(pl != null) {
-            player = pl;
+    public void RemoveTarget() {
+        player = null;
+        if(IsInSight) {
+            SendMessageToAllMessageReceivers(false, null);
+            IsInSight = false;
         }
     }
-    public virtual void OnTriggerExit(Collider other) {
-        PlayerController pl = other.GetComponent<PlayerController>();
-        if(pl != null) {
-            player = null;
-            if(IsInSight) {
-                SendMessageToAllMessageReceivers(false, null);
-                IsInSight = false;
-            }
-        }
+
+    public void SetTarget(PlayerController p) {
+        player = p;
     }
+    
 
     void SendMessageToAllMessageReceivers(bool isInLineOfSight, Transform target) {
         StatusCheckMessage data = new StatusCheckMessage();

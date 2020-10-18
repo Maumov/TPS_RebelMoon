@@ -8,7 +8,7 @@ public class EnemyCharacterCreator : EditorWindow
 
     string prefabName = "Enemy";
     //bool groupEnabled;
-    int layer = 14;
+    //int layer = 14;
     //----
     //bool damageable, enemyController, sphereCollider, navMeshAgent;
     bool playerInFOV;
@@ -35,7 +35,7 @@ public class EnemyCharacterCreator : EditorWindow
         } else {
             animController = null;
         }
-        layer = EditorGUILayout.LayerField("Layer", layer);
+        //layer = EditorGUILayout.LayerField("Layer", layer);
         playerInFOV = EditorGUILayout.Toggle("Check player in FOV", playerInFOV);
         patrol = EditorGUILayout.Toggle("Patrol", patrol);
         attack = EditorGUILayout.Toggle("Attack", attack);
@@ -60,15 +60,22 @@ public class EnemyCharacterCreator : EditorWindow
     void AddComponents() {
         gameObject.AddComponent<Damageable>();
         gameObject.AddComponent<EnemyController>();
+        gameObject.AddComponent<Rigidbody>();
+        gameObject.AddComponent<BoxCollider>();
+        gameObject.layer = 20;
         if(animController != null) {
             gameObject.GetComponent<Animator>().runtimeAnimatorController = animController;
             gameObject.GetComponent<Animator>().applyRootMotion = false;
         }
         if(playerInFOV) {
-            gameObject.AddComponent<SphereCollider>();
-            gameObject.GetComponent<SphereCollider>().isTrigger = true;
+            GameObject g = new GameObject();
+            g.name = "Enemy Range";
+            g.transform.SetParent(gameObject.transform);
+            g.AddComponent<SphereCollider>();
+            g.GetComponent<SphereCollider>().isTrigger = true;
+            g.AddComponent<EnemyDetectionRange>();
+            g.layer = 14;
             gameObject.AddComponent<EnemyCheck_PlayerInSight>();
-            gameObject.layer = layer;
         }
         if(patrol) {
             gameObject.AddComponent<NavMeshAgent>();
@@ -103,6 +110,8 @@ public class EnemyCharacterCreator : EditorWindow
             col.radius = 0.25f;
             col.height = 1.8f;
             g.AddComponent<HitBox>();
+            g.AddComponent<Rigidbody>();
+            g.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 

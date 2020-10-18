@@ -28,7 +28,7 @@ public class Force : MonoBehaviour
             if(rb) {
                 Debug.Log(rb.name);
                 //Vector3 pos = collisionEvents[i].intersection;
-                Vector3 force = ray.direction * 100f;
+                Vector3 force = ray.direction * 10f;
                 rb.AddForce(force, ForceMode.Force);
 
                 ForceMessage data = new ForceMessage();
