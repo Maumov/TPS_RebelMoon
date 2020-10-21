@@ -133,7 +133,7 @@ public class Waypoint
     public Vector3 position;
     public float areaRadius = 1f;
     public List<int> connections;
-
+    public float timeInWaypoint = 2f;
     public void AddConnection(int connection) {
         connections.Add(connection);
     }
