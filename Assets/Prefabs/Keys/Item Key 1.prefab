@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 2291769781490222096}
   - component: {fileID: 4651358139030998260}
   m_Layer: 12
-  m_Name: Rifle M4 1
+  m_Name: Item Key 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c3ae57afe04e0945a81a8d2f34d841a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1
 --- !u!1 &2973369990701530894
 GameObject:
   m_ObjectHideFlags: 0
